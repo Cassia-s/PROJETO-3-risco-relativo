@@ -2,7 +2,17 @@
 
 Projeto Super Caja – Análise de Risco de Crédito
 
+  </details>
+  
+  <details>
+  <summary><strong style="font-size: 16px;">Objetivo</strong></summary>
+
 Este repositório contém a análise completa do projeto Super Caja, cujo objetivo foi automatizar a avaliação de risco de crédito para um banco fictício, utilizando técnicas de análise de dados, estatística e visualização.
+
+  </details>
+  
+  <details>
+  <summary><strong style="font-size: 16px;">Visão geral</strong></summary>
 
 🔍 Visão Geral
 
@@ -13,6 +23,11 @@ Avaliar o risco de crédito de forma automatizada
 Identificar perfis de risco com base em comportamento financeiro e demográfico
 
 Apoiar decisões de concessão de crédito com uma métrica objetiva
+
+  </details>
+  
+  <details>
+  <summary><strong style="font-size: 16px;">Estrutura do projeto</strong></summary>
 
 📁 Estrutura do Projeto
 
@@ -48,6 +63,11 @@ Matriz de confusão: comparação entre previsão e realidade
 
 Dashboard interativo no Looker Studio
 
+  </details>
+  
+  <details>
+  <summary><strong style="font-size: 16px;">Técnicas Utilizadas</strong></summary>
+
 🧮 Técnicas Utilizadas
 
 SQL no BigQuery
@@ -64,6 +84,11 @@ Score composto para classificação de inadimplência
 
 Matriz de confusão para validação do modelo
 
+  </details>
+  
+  <details>
+  <summary><strong style="font-size: 16px;">Dashboard</strong></summary>
+
 📊 Dashboard Interativo
 
 🔗 Acessar o Dashboard no Looker Studio (Substituir pelo link real)
@@ -78,6 +103,11 @@ Tabelas interativas com destaques visuais
 
 Filtros por sexo, idade, renda, score e tipo de empréstimo
 
+  </details>
+  
+  <details>
+  <summary><strong style="font-size: 16px;">Arquivos</strong></summary>
+
 🧾 Arquivos Disponíveis
 
 ficha_tecnica.txt: descrição detalhada de todas as etapas
@@ -86,13 +116,10 @@ queries.sql: todas as queries utilizadas para limpeza, cálculo e análise
 
 README.md: este arquivo
 
-🚀 Como Reproduzir
-
-Suba os arquivos .csv para o BigQuery
-
-Execute as queries no repositório queries.sql
-
-Acesse o Looker Studio e conecte-se ao projeto BigQuery
+  </details>
+  
+  <details>
+  <summary><strong style="font-size: 16px;">Conclusão</strong></summary>
 
 💬 Conclusões
 
@@ -103,6 +130,11 @@ Score de risco composto foi eficaz para prever inadimplência
 Risco relativo por quartil revelou insights de segmentação poderosos
 
 Visualização facilitou a comunicação dos resultados com stakeholders
+
+  </details>
+  
+  <details>
+  <summary><strong style="font-size: 16px;">Equipe</strong></summary>
 
 👩‍💻 Autor
 
