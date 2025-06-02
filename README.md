@@ -79,7 +79,7 @@ Inclui:
 
 - Tabelas interativas com destaques visuais
 
-- Filtros por idade, renda, score e tipo de empréstimo
+- Filtros por idade, histórico, score, classificação e tipo de empréstimo
 
   </details>
   
