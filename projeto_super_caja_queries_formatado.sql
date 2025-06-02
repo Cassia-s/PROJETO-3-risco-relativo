@@ -6,7 +6,7 @@ WHERE default_flag IS NULL;
 
 SELECT * 
 FROM `projetoriscorelativo03.supercaja.user-info-csv`
-WHERE last_month_salary IS NULL;
+WHERE last_month_salary IS MEDIANA;
 
 SELECT * 
 FROM `projetoriscorelativo03.supercaja.user-info-csv`
