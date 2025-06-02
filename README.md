@@ -69,17 +69,17 @@ Descrição
   <details>
   <summary><strong style="font-size: 16px;">📊 Dashboard interativo</strong></summary>
 
-🔗 Acessar o Dashboard no Looker Studio (Substituir pelo link real)
+🔗 Acessar o Dashboard no Looker Studio [https://lookerstudio.google.com/s/smYtOy09NWM]
 
 Inclui:
 
-Scorecards
+- Scorecards
 
-Gráficos univariados e bivariados
+- Gráficos univariados e bivariados
 
-Tabelas interativas com destaques visuais
+- Tabelas interativas com destaques visuais
 
-Filtros por sexo, idade, renda, score e tipo de empréstimo
+- Filtros por idade, renda, score e tipo de empréstimo
 
   </details>
   
