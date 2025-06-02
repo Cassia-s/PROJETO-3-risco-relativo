@@ -86,7 +86,7 @@ Inclui:
   <details>
   <summary><strong style="font-size: 16px;">🧾 Arquivos disponíveis</strong></summary>
 
-ficha_tecnica.txt: descrição detalhada de todas as etapas
+ficha_tecnica.txt: [descrição detalhada de todas as etapas](https://docs.google.com/document/d/10Cd7iiWIZo2bqyT7CRnXBpyDTOwuabboaPUWI0taVNQ/edit?tab=t.0)
 
 queries.sql: todas as queries utilizadas para limpeza, cálculo e análise
 
@@ -97,13 +97,13 @@ README.md: este arquivo
   <details>
   <summary><strong style="font-size: 16px;">💬 Conclusões</strong></summary>
 
-Faixas de menor renda e mais jovens concentram maior risco
+- Faixas de menor renda e mais jovens concentram maior risco
 
-Score de risco composto foi eficaz para prever inadimplência
+- Score de risco composto foi eficaz para prever inadimplência
 
-Risco relativo por quartil revelou insights de segmentação poderosos
+- Risco relativo por quartil revelou insights de segmentação poderosos
 
-Visualização facilitou a comunicação dos resultados com stakeholders
+- Visualização facilitou a comunicação dos resultados com stakeholders
 
   </details>
   
