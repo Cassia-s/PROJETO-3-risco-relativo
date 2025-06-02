@@ -12,63 +12,43 @@ Este repositório contém a análise completa do projeto Super Caja, cujo objeti
   </details>
   
   <details>
-  <summary><strong style="font-size: 16px;">Visão geral</strong></summary>
-
-🔍 Visão Geral
+  <summary><strong style="font-size: 16px;">🔍 Visão geral</strong></summary>
 
 Diante do aumento da demanda por crédito e da alta inadimplência, propusemos uma solução baseada em dados para:
 
-Avaliar o risco de crédito de forma automatizada
+- Avaliar o risco de crédito de forma automatizada
 
-Identificar perfis de risco com base em comportamento financeiro e demográfico
+- Identificar perfis de risco com base em comportamento financeiro e demográfico
 
-Apoiar decisões de concessão de crédito com uma métrica objetiva
+- Apoiar decisões de concessão de crédito com uma métrica objetiva
 
   </details>
   
   <details>
-  <summary><strong style="font-size: 16px;">Estrutura do projeto</strong></summary>
-
-📁 Estrutura do Projeto
+  <summary><strong style="font-size: 16px;">📁 Estrutura do projeto</strong></summary>
 
 Etapa
 
 Descrição
 
-1. Importação de Dados
+1. Importação de Dados: Importação e integração no BigQuery das 4 bases fornecidas (CSV)
 
-Importação e integração no BigQuery das 4 bases fornecidas (CSV)
+2. Limpeza dos Dados: Tratamento de nulos, duplicados, padronização de textos e tipos de dados
 
-2. Limpeza dos Dados
+3. Enriquecimento: Criação de novas variáveis, joins e flags de comportamento
 
-Tratamento de nulos, duplicados, padronização de textos e tipos de dados
+4. Análise Exploratória: Correlações, estatísticas descritivas e agrupamentos
 
-3. Enriquecimento
+5. Risco Relativo: Cálculo por quartis e criação do score de risco
 
-Criação de novas variáveis, joins e flags de comportamento
+6. Validação: Matriz de confusão: comparação entre previsão e realidade
 
-4. Análise Exploratória
-
-Correlações, estatísticas descritivas e agrupamentos
-
-5. Risco Relativo
-
-Cálculo por quartis e criação do score de risco
-
-6. Validação
-
-Matriz de confusão: comparação entre previsão e realidade
-
-7. Visualização
-
-Dashboard interativo no Looker Studio
+7. Visualização: Dashboard interativo no Looker Studio
 
   </details>
   
   <details>
-  <summary><strong style="font-size: 16px;">Técnicas Utilizadas</strong></summary>
-
-🧮 Técnicas Utilizadas
+  <summary><strong style="font-size: 16px;">🧮 Técnicas utilizadas</strong></summary>
 
 SQL no BigQuery
 
@@ -87,9 +67,7 @@ Matriz de confusão para validação do modelo
   </details>
   
   <details>
-  <summary><strong style="font-size: 16px;">Dashboard</strong></summary>
-
-📊 Dashboard Interativo
+  <summary><strong style="font-size: 16px;">📊 Dashboard interativo</strong></summary>
 
 🔗 Acessar o Dashboard no Looker Studio (Substituir pelo link real)
 
@@ -106,9 +84,7 @@ Filtros por sexo, idade, renda, score e tipo de empréstimo
   </details>
   
   <details>
-  <summary><strong style="font-size: 16px;">Arquivos</strong></summary>
-
-🧾 Arquivos Disponíveis
+  <summary><strong style="font-size: 16px;">🧾 Arquivos disponíveis</strong></summary>
 
 ficha_tecnica.txt: descrição detalhada de todas as etapas
 
@@ -119,9 +95,7 @@ README.md: este arquivo
   </details>
   
   <details>
-  <summary><strong style="font-size: 16px;">Conclusão</strong></summary>
-
-💬 Conclusões
+  <summary><strong style="font-size: 16px;">💬 Conclusões</strong></summary>
 
 Faixas de menor renda e mais jovens concentram maior risco
 
@@ -134,9 +108,7 @@ Visualização facilitou a comunicação dos resultados com stakeholders
   </details>
   
   <details>
-  <summary><strong style="font-size: 16px;">Equipe</strong></summary>
-
-👩‍💻 Autor
+  <summary><strong style="font-size: 16px;">👩‍💻 Equipe</strong></summary>
 
 Cassia – Analista de Dados | Projeto Super Caja – Bootcamp
 
