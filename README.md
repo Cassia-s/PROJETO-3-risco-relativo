@@ -50,19 +50,19 @@ Descrição
   <details>
   <summary><strong style="font-size: 16px;">🧮 Técnicas utilizadas</strong></summary>
 
-SQL no BigQuery
+- SQL no BigQuery
 
-Estatística descritiva (média, mediana, desvio padrão, percentis)
+- Estatística descritiva (média, mediana, desvio padrão, percentis)
 
-Correlação entre variáveis
+- Correlação entre variáveis
 
-Intervalo interquartil (IQR) para detectar outliers
+- Intervalo interquartil (IQR) para detectar outliers
 
-Risco relativo por quartis
+- Risco relativo por quartis
 
-Score composto para classificação de inadimplência
+- Score composto para classificação de inadimplência
 
-Matriz de confusão para validação do modelo
+- Matriz de confusão para validação do modelo
 
   </details>
   
