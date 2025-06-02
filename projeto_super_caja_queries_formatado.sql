@@ -4,6 +4,9 @@ SELECT *
 FROM `projetoriscorelativo03.supercaja.default-csv`
 WHERE default_flag IS NULL;
 
+-- Nesta etapa, identificamos registros com valores nulos na coluna `last_month_salary`,
+-- que foram posteriormente tratados com a substituição pela mediana dos salários não nulos.
+
 SELECT * 
 FROM `projetoriscorelativo03.supercaja.user-info-csv`
 WHERE last_month_salary IS NULL;
@@ -15,10 +18,13 @@ WHERE number_dependents IS NULL;
 
 -- 📌 Identificação de Duplicidades
 
-SELECT loan_id, user_id, loan_type, COUNT(*) AS quantidade
-FROM `projetoriscorelativo03.supercaja.loans-outstanding-csv`
-GROUP BY loan_id, user_id, loan_type
-HAVING COUNT(*) > 1;
+SELECT
+user_id, loan_type_padronizado, 
+COUNT(*) as quantidade
+FROM `projetoriscorelativo03.supercaja.loans-outstanding-csv` 
+GROUP BY user_id,loan_type_padronizado
+having count(*) > 1
+ORDER BY quantidade DESC
 
 
 -- 📌 Padronização de Categóricos
@@ -80,5 +86,5 @@ SELECT *,
 FROM `projetoriscorelativo03.supercaja.unificada`;
 
 SELECT *,
-  CASE WHEN score_risco_total >= 7 THEN 'Mau pagador' ELSE 'Bom pagador' END AS previsao_default
+  CASE WHEN score_risco_total >= 8.5 THEN 'Mau pagador' ELSE 'Bom pagador' END AS previsao_default
 FROM `projetoriscorelativo03.supercaja.score_risco`;
