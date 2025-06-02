@@ -69,7 +69,7 @@ Descrição
   <details>
   <summary><strong style="font-size: 16px;">📊 Dashboard interativo</strong></summary>
 
-🔗 Acessar o Dashboard no Looker Studio [https://lookerstudio.google.com/s/smYtOy09NWM]
+[🔗 Acessar o Dashboard no Looker Studio] (https://lookerstudio.google.com/s/smYtOy09NWM)
 
 Inclui:
 
