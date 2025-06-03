@@ -90,8 +90,6 @@ ficha_tecnica.txt: [descrição detalhada de todas as etapas](https://docs.googl
 
 queries.sql: todas as queries utilizadas para limpeza, cálculo e análise
 
-README.md: este arquivo
-
   </details>
   
   <details>
