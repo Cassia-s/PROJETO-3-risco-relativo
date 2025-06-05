@@ -9,6 +9,13 @@
 
 Este repositório contém a análise completa do projeto Super Caja, cujo objetivo foi automatizar a avaliação de risco de crédito para um banco fictício, utilizando técnicas de análise de dados, estatística e visualização.
 
+ </details>
+  
+  <details>
+  <summary><strong style="font-size: 16px;">Equipe</strong></summary>
+
+Cassia – Analista de Dados | Projeto Super Caja – Bootcamp
+
   </details>
   
   <details>
@@ -102,11 +109,4 @@ queries.sql: todas as queries utilizadas para limpeza, cálculo e análise
 - Risco relativo por quartil revelou insights de segmentação poderosos
 
 - Visualização facilitou a comunicação dos resultados com stakeholders
-
-  </details>
-  
-  <details>
-  <summary><strong style="font-size: 16px;">Equipe</strong></summary>
-
-Cassia – Analista de Dados | Projeto Super Caja – Bootcamp
 
