@@ -12,7 +12,7 @@ Este repositório contém a análise completa do projeto Super Caja, cujo objeti
   </details>
   
   <details>
-  <summary><strong style="font-size: 16px;">🔍 Visão geral</strong></summary>
+  <summary><strong style="font-size: 16px;">Visão geral</strong></summary>
 
 Diante do aumento da demanda por crédito e da alta inadimplência, propusemos uma solução baseada em dados para:
 
@@ -25,7 +25,7 @@ Diante do aumento da demanda por crédito e da alta inadimplência, propusemos u
   </details>
   
   <details>
-  <summary><strong style="font-size: 16px;">📁 Estrutura do projeto</strong></summary>
+  <summary><strong style="font-size: 16px;">Estrutura do projeto</strong></summary>
 
 Etapa
 
@@ -48,7 +48,7 @@ Descrição
   </details>
   
   <details>
-  <summary><strong style="font-size: 16px;">🧮 Técnicas utilizadas</strong></summary>
+  <summary><strong style="font-size: 16px;">Técnicas utilizadas</strong></summary>
 
 - SQL no BigQuery
 
@@ -67,7 +67,7 @@ Descrição
   </details>
   
   <details>
-  <summary><strong style="font-size: 16px;">📊 Dashboard interativo</strong></summary>
+  <summary><strong style="font-size: 16px;">Dashboard interativo</strong></summary>
 
 🔗 [Acessar o Dashboard no Looker Studio](https://lookerstudio.google.com/s/smYtOy09NWM)
 
@@ -84,7 +84,7 @@ Inclui:
   </details>
   
   <details>
-  <summary><strong style="font-size: 16px;">🧾 Arquivos disponíveis</strong></summary>
+  <summary><strong style="font-size: 16px;">Arquivos disponíveis</strong></summary>
 
 ficha_tecnica.txt: [descrição detalhada de todas as etapas](https://docs.google.com/document/d/10Cd7iiWIZo2bqyT7CRnXBpyDTOwuabboaPUWI0taVNQ/edit?tab=t.0)
 
@@ -93,7 +93,7 @@ queries.sql: todas as queries utilizadas para limpeza, cálculo e análise
   </details>
   
   <details>
-  <summary><strong style="font-size: 16px;">💬 Conclusões</strong></summary>
+  <summary><strong style="font-size: 16px;">Conclusões</strong></summary>
 
 - Faixas de menor renda e mais jovens concentram maior risco
 
@@ -106,7 +106,7 @@ queries.sql: todas as queries utilizadas para limpeza, cálculo e análise
   </details>
   
   <details>
-  <summary><strong style="font-size: 16px;">👩‍💻 Equipe</strong></summary>
+  <summary><strong style="font-size: 16px;">Equipe</strong></summary>
 
 Cassia – Analista de Dados | Projeto Super Caja – Bootcamp
 
