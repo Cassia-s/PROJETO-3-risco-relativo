@@ -36,8 +36,6 @@ Diante do aumento da demanda por crédito e da alta inadimplência, propusemos u
 
 Etapa
 
-Descrição
-
 1. Importação de Dados: Importação e integração no BigQuery das 4 bases fornecidas (CSV)
 
 2. Limpeza dos Dados: Tratamento de nulos, duplicados, padronização de textos e tipos de dados
