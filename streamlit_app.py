@@ -36,35 +36,29 @@ atrasos_60 = st.number_input("Atrasos 60 dias", min_value=0, step=1, value=0)
 atrasos_90_mais = st.number_input("Atrasos 90+ dias", min_value=0, step=1, value=0)
 
 # --- Cálculos ---
-# Atrasos ponderados com pesos
 total_atrasos_ponderado = (atrasos_30 * 0.5) + (atrasos_60 * 1.0) + (atrasos_90_mais * 2.0)
-
-# Proteções com valores padrão conservadores
 salario_por_dependente = salario / dependentes if dependentes > 0 else (salario if salario > 0 else 500.0)
 media_debt_ratio = dividas_mensais / salario if salario > 0 else 1.0
 media_uso_linhas_credito = uso_credito / limite_credito if limite_credito > 0 else 1.0
-
-# Índice de risco agora sempre tem influência
 indice_risco_credito = 1 + total_atrasos_ponderado / (1 + uso_credito / 1000)
-peso_emprestimos = emprestimos_ativos * 0.5
+peso_emprestimos = emprestimos_ativos * 1.5  # Peso ajustado
 
-# Score total com pesos ajustados
+# Score com pesos reforçados
 score_total = (
-    (indice_risco_credito * 2.0) +
-    (0.5 / (salario_por_dependente / 1000)) +
-    (media_debt_ratio * 3.0) +
-    (media_uso_linhas_credito * 1.5) +
-    peso_emprestimos
+    (indice_risco_credito * 4.0) +                    # Aumentado
+    (0.8 / (salario_por_dependente / 1000)) +         # Mais sensível a renda per capita
+    (media_debt_ratio * 5.0) +                        # Dívida tem mais impacto
+    (media_uso_linhas_credito * 2.5) +                # Uso de crédito também
+    peso_emprestimos                                  # Já com peso ajustado
 )
 
-# Normalizar o score para entre 1 e 10
-score_total = max(1.0, min(10.0, score_total / 2.5))
+# Normalizar score para escala 1–10
+score_total = max(1.0, min(10.0, score_total / 3.0))  # Divisor maior para melhor dispersão
 
 # --- Exibir Resultados ---
 st.header("📊 Resultado da Análise")
 st.metric(label="📈 Score de Risco Total", value=f"{score_total:.2f}")
 
-# Classificação de risco
 if score_total <= 6:
     st.success("✅ **Resultado: Bom Pagador**")
 elif 6 < score_total <= 8:
@@ -72,7 +66,7 @@ elif 6 < score_total <= 8:
 elif score_total > 8.0:
     st.error("🚩 **Resultado: Mau Pagador**")
 
-# Resumo formatado
+# --- Resumo dos dados informados ---
 st.markdown("### 💡 Resumo dos Dados Informados")
 st.markdown(f"- **Salário:** {formatar_moeda(salario)}")
 st.markdown(f"- **Dívidas mensais:** {formatar_moeda(dividas_mensais)}")
@@ -84,27 +78,28 @@ st.markdown(f"- **Atrasos (<30 / 30-90 / 90+):** {atrasos_30} / {atrasos_60} / {
 
 st.markdown("---")
 
-# --- Explicação dos critérios ---
+# --- Explicação ---
 with st.expander("ℹ️ Entenda como o score é calculado"):
     st.markdown("""
 O **Score de Risco Total** avalia a probabilidade de inadimplência com base em:
 
-- **Histórico de Atrasos:** Atrasos longos impactam mais o score.
-- **Salário por Dependente:** Renda disponível por pessoa da família.
-- **Dívidas sobre salário:** Quanto maior a proporção, maior o risco.
-- **Uso do Crédito:** Quanto mais perto do limite, maior o risco.
-- **Empréstimos Ativos:** Muitos empréstimos elevam o risco.
+- **Histórico de Atrasos:** Atrasos mais longos impactam mais.
+- **Renda por Dependente:** Menor valor indica maior risco.
+- **Proporção de Dívidas:** Dívidas comprometendo boa parte da renda são críticas.
+- **Uso de Crédito:** Alto uso do limite disponível é sinal de dependência.
+- **Empréstimos Ativos:** Muitos empréstimos aumentam a exposição ao risco.
 
 **Faixas de Score:**
 - **1 a 6:** Bom Pagador  
 - **7 a 8:** Intermediário  
-- **8,5 a 10:** Mau Pagador
+- **8.5 a 10:** Mau Pagador
 
-> ⚠️ Este é um modelo demonstrativo. Um sistema real usaria aprendizado de máquina com milhares de registros.
+> ⚠️ Este simulador é demonstrativo e não substitui modelos estatísticos baseados em grandes volumes de dados reais.
 """)
 
 st.markdown("---")
 st.info("Desenvolvido para Super Caja com ❤️ usando Streamlit")
+
 
 
 
