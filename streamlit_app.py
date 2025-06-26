@@ -31,7 +31,7 @@ with col2:
 
 st.subheader("🗓️ Histórico de Atrasos")
 st.markdown("Informe o número de atrasos por período:")
-atrasos_30 = st.number_input("Atrasos < 30 dias", min_value=0, step=1, value=0)
+atrasos_30 = st.number_input("Atrasos 30 dias", min_value=0, step=1, value=0)
 atrasos_60 = st.number_input("Atrasos 60 dias", min_value=0, step=1, value=0)
 atrasos_90_mais = st.number_input("Atrasos 90+ dias", min_value=0, step=1, value=0)
 
