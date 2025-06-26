@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
 
-st.set_page_config(page_title="Calculadora de Risco de Crédito - Super Caja", layout="centered")
+st.set_page_config(page_title="Calculadora de Risco de Crédito - Super Caja", layout="centered", icon="📊")
 
 st.title("💸 Calculadora de Risco de Crédito - Super Caja")
 
@@ -16,13 +16,16 @@ st.header("👤 Dados do Cliente")
 col1, col2 = st.columns(2)
 
 with col1:
-    salario = st.number_input("💵 Salário mensal (R$)", min_value=0.0, step=100.0, value=0.0)
+    salario = st.number_input("💵 Salário mensal (R$)", min_value=0.0, step=100.0, format="%.2f", value=0.0)
     dependentes = st.number_input("👨‍👩‍👧‍👦 Número de dependentes", min_value=0, step=1, value=0)
-    dividas_mensais = st.number_input("📉 Total de dívidas mensais (R$)", min_value=0.0, step=100.0, value=0.0)
+    dividas_mensais = st.number_input("📉 Total de dívidas mensais (R$)", min_value=0.0, step=100.0, format="%.2f", value=0.0)
 
 with col2:
-    limite_credito = st.number_input("💳 Limite total de crédito disponível (R$)", min_value=0.0, step=100.0, value=0.0)
-    uso_credito = st.number_input("📊 Uso atual do crédito (R$)", min_value=0.0, step=100.0, value=0.0)
+    limite_credito = st.number_input("💳 Limite total de crédito disponível (R$)", min_value=0.0, step=100.0, format="%.2f", value=0.0)
+    uso_credito = st.number_input("📊 Uso atual do crédito (R$)", min_value=0.0, step=100.0, format="%.2f", value=0.0)
+    # Novo campo para quantidade de empréstimo ativo
+    emprestimos_ativos = st.number_input("🏦 Quantidade de empréstimos ativos", min_value=0, step=1, value=0)
+
 
 st.subheader("🗓️ Histórico de Atrasos")
 st.markdown("Informe o número de atrasos por período:")
@@ -34,15 +37,23 @@ atrasos_90_mais = st.number_input("Atrasos 90+ dias", min_value=0, step=1, value
 # Unificar os atrasos com pesos diferentes (maior peso para atrasos mais longos)
 total_atrasos_ponderado = (atrasos_30 * 0.5) + (atrasos_60 * 1.0) + (atrasos_90_mais * 2.0)
 
-salario_por_dependente = salario / dependentes if dependentes > 0 else salario if salario > 0 else 1 # Avoid division by zero
+# Correção para ZeroDivisionError em salario_por_dependente
+salario_por_dependente = salario / dependentes if dependentes > 0 else (salario if salario > 0 else 1)
+# Se salário e dependentes são zero, assume 1 para evitar divisão por zero mais tarde.
+
+# Correção para ZeroDivisionError em media_debt_ratio
 media_debt_ratio = dividas_mensais / salario if salario > 0 else 0.36
+
+# Correção para ZeroDivisionError em media_uso_linhas_credito
 media_uso_linhas_credito = uso_credito / limite_credito if limite_credito > 0 else 0.62
 
 # Indice de Risco de Crédito aprimorado
-# Se não houver uso de crédito, o risco pode ser considerado menor, mas ainda presente
-# O divisor 1 + uso_credito evita divisão por zero e suaviza o impacto
-indice_risco_credito = total_atrasos_ponderado / (1 + uso_credito / 1000) if uso_credito > 0 else total_atrasos_ponderado * 0.5
+# Garante que o divisor não seja zero. Se uso_credito for 0, o fator (1 + uso_credito / 1000) será 1.
+indice_risco_credito = total_atrasos_ponderado / (1 + uso_credito / 1000)
 
+# Incorporar 'emprestimos_ativos' no cálculo do score
+# Um peso para a quantidade de empréstimos ativos. Quanto mais, maior o risco.
+peso_emprestimos = emprestimos_ativos * 0.5 # Ajuste este peso conforme sua necessidade
 
 # --- Cálculo do Score de Risco Total (com pesos simulados ajustados) ---
 # Os pesos foram ajustados para que o score caia dentro das faixas desejadas (1-10)
@@ -51,16 +62,12 @@ score_total = (
     (indice_risco_credito * 2.0) +  # Atrasos têm um peso significativo
     (0.5 / (salario_por_dependente / 1000)) + # Salário por dependente inversamente proporcional ao risco
     (media_debt_ratio * 3.0) + # Dívidas mensais sobre salário
-    (media_uso_linhas_credito * 1.5) # Uso do limite de crédito
+    (media_uso_linhas_credito * 1.5) + # Uso do limite de crédito
+    peso_emprestimos # Adiciona o peso dos empréstimos ativos
 )
 
 # Normalizar o score para a escala de 1 a 10
-# Este é um ajuste manual e pode precisar de mais refinamento com dados reais
-# Para garantir que o score fique na faixa de 1-10, podemos usar uma função de mapeamento
-# Ex: Min-Max Scaling (Score_final = 1 + (Score_bruto - Min_bruto) * (10 - 1) / (Max_bruto - Min_bruto))
-# Para simplificar aqui, faremos um ajuste linear mais simples ou uma função sigmoidal se necessário
-# Por enquanto, vamos limitar o score para não ultrapassar muito, e definir um mínimo.
-score_total = max(1.0, min(10.0, score_total / 2.5)) # Ajuste para escalar para 1-10 aproximadamente
+score_total = max(1.0, min(10.0, score_total / 2.5)) # Ajuste este divisor para calibrar o score
 
 # --- Exibir Resultados ---
 st.header("📊 Resultados da Análise")
@@ -68,10 +75,10 @@ st.markdown(f"**Score de Risco Total:** `{score_total:.2f}`")
 
 if score_total <= 6:
     st.success("✅ **Resultado: Bom Pagador**")
-    st.balloons()
+    # Removido st.balloons()
 elif 6 < score_total <= 8:
     st.warning("⚠️ **Resultado: Intermediário**")
-elif score_total > 8: # Corrigido para 8 em vez de 8.5 para ficar claro com a divisão
+elif score_total > 8:
     st.error("🚩 **Resultado: Mau Pagador**")
 
 st.markdown("---")
@@ -85,6 +92,7 @@ with st.expander("ℹ️ Entenda como o score é calculado"):
     * **Salário Ajustado por Dependente:** Avalia a renda disponível do cliente em relação à sua carga familiar. Um salário alto com poucos dependentes indica menor risco.
     * **Proporção de Dívidas Mensais (Debt-to-Income Ratio):** Compara o total de dívidas mensais do cliente com sua renda. Uma proporção alta indica que grande parte do salário é comprometida com pagamentos.
     * **Uso das Linhas de Crédito (Credit Utilization):** Analisa o quanto do limite de crédito disponível o cliente está utilizando. Usar uma porcentagem muito alta do limite pode indicar dependência de crédito e maior risco.
+    * **Quantidade de Empréstimos Ativos:** O número de empréstimos em andamento pode indicar o nível de comprometimento financeiro e o risco de endividamento excessivo.
 
     **Classificação do Score:**
 
