@@ -12,7 +12,7 @@ st.title("💸 Calculadora de Risco de Crédito - Super Caja")
 
 st.markdown("""
 Preencha os dados do cliente abaixo para uma **análise de risco de crédito**.  
-Nosso sistema estima a probabilidade do cliente ser um **Bom Pagador**, **Intermediário** ou **Mau Pagador**.
+Nosso sistema estima a probabilidade do cliente ser um **Bom Pagador** ou **Mau Pagador** com base nos dados fornecidos.
 """)
 
 # --- Entradas do Usuário ---
@@ -31,8 +31,8 @@ with col2:
 
 st.subheader("🗓️ Histórico de Atrasos")
 st.markdown("Informe o número de atrasos por período:")
-atrasos_30 = st.number_input("Atrasos 30 dias", min_value=0, step=1, value=0)
-atrasos_60 = st.number_input("Atrasos 60 dias", min_value=0, step=1, value=0)
+atrasos_30 = st.number_input("Atrasos < 30 dias", min_value=0, step=1, value=0)
+atrasos_60 = st.number_input("Atrasos entre 30 e 90 dias", min_value=0, step=1, value=0)
 atrasos_90_mais = st.number_input("Atrasos 90+ dias", min_value=0, step=1, value=0)
 
 # --- Cálculos ---
@@ -45,26 +45,25 @@ peso_emprestimos = emprestimos_ativos * 1.5  # Peso ajustado
 
 # Score com pesos reforçados
 score_total = (
-    (indice_risco_credito * 4.0) +                    # Aumentado
-    (0.8 / (salario_por_dependente / 1000)) +         # Mais sensível a renda per capita
-    (media_debt_ratio * 5.0) +                        # Dívida tem mais impacto
-    (media_uso_linhas_credito * 2.5) +                # Uso de crédito também
-    peso_emprestimos                                  # Já com peso ajustado
+    (indice_risco_credito * 4.0) +                    # Peso maior para atrasos
+    (0.8 / (salario_por_dependente / 1000)) +         # Inversamente proporcional à renda per capita
+    (media_debt_ratio * 5.0) +                        # Dívida sobre salário
+    (media_uso_linhas_credito * 2.5) +                # Uso do crédito
+    peso_emprestimos                                  # Empréstimos ativos
 )
 
-# Normalizar score para escala 1–10
-score_total = max(1.0, min(10.0, score_total / 3.0))  # Divisor maior para melhor dispersão
+# Normalizar score para 1 a 10
+score_total = max(1.0, min(10.0, score_total / 3.0))
 
-# --- Exibir Resultados ---
+# --- Resultado final ---
 st.header("📊 Resultado da Análise")
 st.metric(label="📈 Score de Risco Total", value=f"{score_total:.2f}")
 
-if score_total <= 6:
-    st.success("✅ **Resultado: Bom Pagador**")
-elif 6 < score_total <= 8:
-    st.warning("⚠️ **Resultado: Intermediário**")
-elif score_total > 8.0:
-    st.error("🚩 **Resultado: Mau Pagador**")
+# Apenas duas classificações
+if score_total <= 8.5:
+    st.success("✅ **Resultado: Bom Pagador**\nCliente com perfil financeiro confiável.")
+else:
+    st.error("🚩 **Resultado: Mau Pagador**\nAlto risco de inadimplência identificado.")
 
 # --- Resumo dos dados informados ---
 st.markdown("### 💡 Resumo dos Dados Informados")
@@ -81,23 +80,24 @@ st.markdown("---")
 # --- Explicação ---
 with st.expander("ℹ️ Entenda como o score é calculado"):
     st.markdown("""
-O **Score de Risco Total** avalia a probabilidade de inadimplência com base em:
+O **Score de Risco Total** avalia a chance do cliente se tornar inadimplente com base em:
 
-- **Histórico de Atrasos:** Atrasos mais longos impactam mais.
-- **Renda por Dependente:** Menor valor indica maior risco.
-- **Proporção de Dívidas:** Dívidas comprometendo boa parte da renda são críticas.
-- **Uso de Crédito:** Alto uso do limite disponível é sinal de dependência.
-- **Empréstimos Ativos:** Muitos empréstimos aumentam a exposição ao risco.
+- **Histórico de Atrasos:** Atrasos mais graves impactam mais.
+- **Renda por Dependente:** Menor valor, maior comprometimento financeiro.
+- **Proporção de Dívidas:** Renda comprometida por dívidas aumenta o risco.
+- **Uso do Crédito:** Alto uso do limite disponível indica dependência.
+- **Empréstimos Ativos:** Muitos empréstimos ativos aumentam a exposição.
 
-**Faixas de Score:**
-- **1 a 6:** Bom Pagador  
-- **7 a 8:** Intermediário  
-- **8.5 a 10:** Mau Pagador
+**Classificação final:**
+- **Score até 8.5** → Perfil de **Bom Pagador**  
+- **Score acima de 8.5** → Perfil com **Alto Risco de Inadimplência**
 
-> ⚠️ Este simulador é demonstrativo e não substitui modelos estatísticos baseados em grandes volumes de dados reais.
+> ⚠️ Este modelo é simulado e não substitui análises estatísticas reais baseadas em grandes bases de dados.
 """)
 
 st.markdown("---")
+st.info("Desenvolvido para Super Caja com ❤️ usando Streamlit")
+
 st.info("Desenvolvido para Super Caja com ❤️ usando Streamlit")
 
 
