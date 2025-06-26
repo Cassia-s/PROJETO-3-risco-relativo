@@ -1,4 +1,4 @@
-pip install --upgrade streamlit
+streamlit run streamlit_app.py
 
 import streamlit as st
 import numpy as np
