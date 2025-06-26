@@ -1,18 +1,22 @@
 import streamlit as st
 import numpy as np
 
-st.set_page_config(page_title="Calculadora de Risco de Crédito - Super Caja", layout="centered", icon="📊")
+# --- Função para formatar moeda estilo brasileiro ---
+def formatar_moeda(valor):
+    return f"R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+# --- Configuração da página ---
+st.set_page_config(page_title="Calculadora de Risco de Crédito - Super Caja", layout="centered")
 
 st.title("💸 Calculadora de Risco de Crédito - Super Caja")
 
 st.markdown("""
-    Preencha os dados do cliente abaixo para uma **análise de risco de crédito**.
-    Nosso sistema estima a probabilidade do cliente ser um **Bom Pagador**, **Intermediário** ou **Mau Pagador**.
+Preencha os dados do cliente abaixo para uma **análise de risco de crédito**.  
+Nosso sistema estima a probabilidade do cliente ser um **Bom Pagador**, **Intermediário** ou **Mau Pagador**.
 """)
 
 # --- Entradas do Usuário ---
 st.header("👤 Dados do Cliente")
-
 col1, col2 = st.columns(2)
 
 with col1:
@@ -23,9 +27,7 @@ with col1:
 with col2:
     limite_credito = st.number_input("💳 Limite total de crédito disponível (R$)", min_value=0.0, step=100.0, format="%.2f", value=0.0)
     uso_credito = st.number_input("📊 Uso atual do crédito (R$)", min_value=0.0, step=100.0, format="%.2f", value=0.0)
-    # Novo campo para quantidade de empréstimo ativo
     emprestimos_ativos = st.number_input("🏦 Quantidade de empréstimos ativos", min_value=0, step=1, value=0)
-
 
 st.subheader("🗓️ Histórico de Atrasos")
 st.markdown("Informe o número de atrasos por período:")
@@ -33,75 +35,66 @@ atrasos_30 = st.number_input("Atrasos < 30 dias", min_value=0, step=1, value=0)
 atrasos_60 = st.number_input("Atrasos entre 30 e 90 dias", min_value=0, step=1, value=0)
 atrasos_90_mais = st.number_input("Atrasos 90+ dias", min_value=0, step=1, value=0)
 
-# --- Cálculos das Variáveis ---
-# Unificar os atrasos com pesos diferentes (maior peso para atrasos mais longos)
+# --- Cálculos ---
 total_atrasos_ponderado = (atrasos_30 * 0.5) + (atrasos_60 * 1.0) + (atrasos_90_mais * 2.0)
-
-# Correção para ZeroDivisionError em salario_por_dependente
 salario_por_dependente = salario / dependentes if dependentes > 0 else (salario if salario > 0 else 1)
-# Se salário e dependentes são zero, assume 1 para evitar divisão por zero mais tarde.
-
-# Correção para ZeroDivisionError em media_debt_ratio
 media_debt_ratio = dividas_mensais / salario if salario > 0 else 0.36
-
-# Correção para ZeroDivisionError em media_uso_linhas_credito
 media_uso_linhas_credito = uso_credito / limite_credito if limite_credito > 0 else 0.62
-
-# Indice de Risco de Crédito aprimorado
-# Garante que o divisor não seja zero. Se uso_credito for 0, o fator (1 + uso_credito / 1000) será 1.
 indice_risco_credito = total_atrasos_ponderado / (1 + uso_credito / 1000)
+peso_emprestimos = emprestimos_ativos * 0.5
 
-# Incorporar 'emprestimos_ativos' no cálculo do score
-# Um peso para a quantidade de empréstimos ativos. Quanto mais, maior o risco.
-peso_emprestimos = emprestimos_ativos * 0.5 # Ajuste este peso conforme sua necessidade
-
-# --- Cálculo do Score de Risco Total (com pesos simulados ajustados) ---
-# Os pesos foram ajustados para que o score caia dentro das faixas desejadas (1-10)
-# e para dar mais peso aos fatores que indicam maior risco.
+# Score total com pesos ajustados
 score_total = (
-    (indice_risco_credito * 2.0) +  # Atrasos têm um peso significativo
-    (0.5 / (salario_por_dependente / 1000)) + # Salário por dependente inversamente proporcional ao risco
-    (media_debt_ratio * 3.0) + # Dívidas mensais sobre salário
-    (media_uso_linhas_credito * 1.5) + # Uso do limite de crédito
-    peso_emprestimos # Adiciona o peso dos empréstimos ativos
+    (indice_risco_credito * 2.0) +
+    (0.5 / (salario_por_dependente / 1000)) +
+    (media_debt_ratio * 3.0) +
+    (media_uso_linhas_credito * 1.5) +
+    peso_emprestimos
 )
 
-# Normalizar o score para a escala de 1 a 10
-score_total = max(1.0, min(10.0, score_total / 2.5)) # Ajuste este divisor para calibrar o score
+score_total = max(1.0, min(10.0, score_total / 2.5))
 
 # --- Exibir Resultados ---
-st.header("📊 Resultados da Análise")
-st.markdown(f"**Score de Risco Total:** `{score_total:.2f}`")
+st.header("📊 Resultado da Análise")
+
+st.metric(label="📈 Score de Risco Total", value=f"{score_total:.2f}")
 
 if score_total <= 6:
     st.success("✅ **Resultado: Bom Pagador**")
-    # Removido st.balloons()
 elif 6 < score_total <= 8:
     st.warning("⚠️ **Resultado: Intermediário**")
-elif score_total > 8:
+elif score_total > 8.0:
     st.error("🚩 **Resultado: Mau Pagador**")
+
+# Exibir valores de entrada formatados
+st.markdown("### 💡 Resumo dos Dados Informados")
+st.markdown(f"- **Salário:** {formatar_moeda(salario)}")
+st.markdown(f"- **Dívidas mensais:** {formatar_moeda(dividas_mensais)}")
+st.markdown(f"- **Limite de crédito:** {formatar_moeda(limite_credito)}")
+st.markdown(f"- **Uso atual do crédito:** {formatar_moeda(uso_credito)}")
 
 st.markdown("---")
 
 # --- Explicações ---
 with st.expander("ℹ️ Entenda como o score é calculado"):
     st.markdown("""
-    O **Score de Risco Total** é uma métrica que avalia a probabilidade de um cliente honrar seus compromissos financeiros. Ele é calculado com base em diversos fatores, cada um com um peso específico na fórmula:
+O **Score de Risco Total** avalia a probabilidade de inadimplência com base em múltiplos fatores:
 
-    * **Histórico de Atrasos (Ponderado):** Considera a gravidade dos atrasos, dando mais peso a dívidas mais antigas (90+ dias) do que a atrasos recentes (< 30 dias). Quanto mais e mais longos os atrasos, maior o risco.
-    * **Salário Ajustado por Dependente:** Avalia a renda disponível do cliente em relação à sua carga familiar. Um salário alto com poucos dependentes indica menor risco.
-    * **Proporção de Dívidas Mensais (Debt-to-Income Ratio):** Compara o total de dívidas mensais do cliente com sua renda. Uma proporção alta indica que grande parte do salário é comprometida com pagamentos.
-    * **Uso das Linhas de Crédito (Credit Utilization):** Analisa o quanto do limite de crédito disponível o cliente está utilizando. Usar uma porcentagem muito alta do limite pode indicar dependência de crédito e maior risco.
-    * **Quantidade de Empréstimos Ativos:** O número de empréstimos em andamento pode indicar o nível de comprometimento financeiro e o risco de endividamento excessivo.
+- **Histórico de Atrasos:** Atrasos mais longos impactam mais negativamente.
+- **Salário por Dependente:** Menor renda per capita pode indicar maior risco.
+- **Proporção de Dívidas (Debt Ratio):** Quanto maior, maior o risco.
+- **Uso do Crédito Disponível:** Alto uso indica maior dependência.
+- **Empréstimos Ativos:** Muitos empréstimos ativos elevam o risco.
 
-    **Classificação do Score:**
+**Faixas de Classificação:**
+- **1 a 6:** Bom Pagador  
+- **7 a 8:** Intermediário  
+- **8,5 a 10:** Mau Pagador (risco elevado)
 
-    * **1 - 6:** **Bom Pagador** - Indivíduos com histórico financeiro sólido e baixa probabilidade de inadimplência.
-    * **7 - 8:** **Intermediário** - Clientes com alguns pontos de atenção em seu perfil de crédito, mas que ainda podem ser considerados com risco moderado.
-    * **8.5 - 10:** **Mau Pagador** - Perfil com alto risco de inadimplência, geralmente devido a um histórico de pagamentos inconsistente ou alta alavancagem financeira.
-
-    **Importante:** Este é um modelo simulado para fins demonstrativos. Um modelo real de risco de crédito utiliza algoritmos mais complexos e uma base de dados muito maior para calibração e validação.
-    """)
+> ⚠️ Esta ferramenta é um simulador e não substitui modelos estatísticos reais validados por instituições financeiras.
+""")
 
 st.markdown("---")
-st.info("Desenvolvido para Super Caja com Streamlit")
+st.info("Desenvolvido para Super Caja com ❤️ usando Streamlit")
+
+
