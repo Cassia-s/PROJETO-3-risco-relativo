@@ -16,13 +16,13 @@ st.header("👤 Dados do Cliente")
 col1, col2 = st.columns(2)
 
 with col1:
-    salario = st.number_input("💵 Salário mensal (R$)", min_value=0.0, step=100.0, format="%.2f", value=0.0)
+    salario = st.number_input("💵 Salário mensal (R$)", min_value=0.0, step=100.0, value=0.0)
     dependentes = st.number_input("👨‍👩‍👧‍👦 Número de dependentes", min_value=0, step=1, value=0)
-    dividas_mensais = st.number_input("📉 Total de dívidas mensais (R$)", min_value=0.0, step=100.0, format="%.2f", value=0.0)
+    dividas_mensais = st.number_input("📉 Total de dívidas mensais (R$)", min_value=0.0, step=100.0, value=0.0)
 
 with col2:
-    limite_credito = st.number_input("💳 Limite total de crédito disponível (R$)", min_value=0.0, step=100.0, format="%.2f", value=0.0)
-    uso_credito = st.number_input("📊 Uso atual do crédito (R$)", min_value=0.0, step=100.0, format="%.2f", value=0.0)
+    limite_credito = st.number_input("💳 Limite total de crédito disponível (R$)", min_value=0.0, step=100.0, value=0.0)
+    uso_credito = st.number_input("📊 Uso atual do crédito (R$)", min_value=0.0, step=100.0, value=0.0)
 
 st.subheader("🗓️ Histórico de Atrasos")
 st.markdown("Informe o número de atrasos por período:")
