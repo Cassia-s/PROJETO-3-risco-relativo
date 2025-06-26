@@ -98,8 +98,6 @@ O **Score de Risco Total** avalia a chance do cliente se tornar inadimplente com
 st.markdown("---")
 st.info("Desenvolvido para Super Caja com ❤️ usando Streamlit")
 
-st.info("Desenvolvido para Super Caja com ❤️ usando Streamlit")
-
 
 
 
