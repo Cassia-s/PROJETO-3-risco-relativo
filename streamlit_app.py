@@ -4,7 +4,7 @@ import numpy as np
 
 st.set_page_config(page_title="Calculadora Super Caja", layout="centered")
 
-st.title("📊 Calculadora de Risco de Crédito - Super Caja")
+st.title("Calculadora de Risco de Crédito - Super Caja")
 
 st.markdown("Preencha os dados do cliente abaixo para estimar se ele é um **Bom Pagador** ou **Mau Pagador**.")
 
