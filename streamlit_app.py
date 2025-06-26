@@ -73,7 +73,7 @@ st.markdown(f"- **Limite de crédito:** {formatar_moeda(limite_credito)}")
 st.markdown(f"- **Uso atual do crédito:** {formatar_moeda(uso_credito)}")
 st.markdown(f"- **Dependentes:** {dependentes}")
 st.markdown(f"- **Empréstimos ativos:** {emprestimos_ativos}")
-st.markdown(f"- **Atrasos (<30 / 30-90 / 90+):** {atrasos_30} / {atrasos_60} / {atrasos_90_mais}")
+st.markdown(f"- **Atrasos (<30 / 60 / 90+):** {atrasos_30} / {atrasos_60} / {atrasos_90_mais}")
 
 st.markdown("---")
 
